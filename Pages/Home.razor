@@ -1,0 +1,44 @@
+﻿@page "/"
+@inject NavigationManager Navigation
+
+<div style="padding:20px; max-width:600px; margin:auto;">
+    <h2 style="text-align:center; margin-bottom:20px;">Aplicaciones de la Empresa</h2>
+
+    <div style="
+        display:grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap:20px;
+        text-align:center;">
+
+        @foreach (var app in Apps)
+        {
+            <div style="cursor:pointer" @onclick="() => Open(app.Url)">
+                <img src="@app.Icon" style="width:64px; height:64px;" />
+                <div style="margin-top:10px;">@app.Name</div>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    class CompanyApp
+    {
+        public string Name { get; set; }
+        public string Icon { get; set; }
+        public string Url { get; set; }
+    }
+
+    List<CompanyApp> Apps = new()
+    {
+        new() { Name="ERP", Icon="icons/erp.png", Url="https://erp.tuempresa.com" },
+        new() { Name="CRM", Icon="icons/crm.png", Url="https://crm.tuempresa.com" },
+        new() { Name="RRHH", Icon="icons/hr.png", Url="https://rrhh.tuempresa.com" },
+        new() { Name="Inventario", Icon="icons/inventory.png", Url="https://inventario.tuempresa.com" },
+        new() { Name="Contabilidad", Icon="icons/accounting.png", Url="https://contabilidad.tuempresa.com" }
+    };
+
+    void Open(string url)
+    {
+        Navigation.NavigateTo(url, forceLoad: true);
+    }
+}
